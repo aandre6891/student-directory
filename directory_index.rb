@@ -30,8 +30,9 @@ def print_header
     puts "Which initial do you want to check?"
     initial = gets.chomp.upcase
     students.each_with_index do |student, index|
-      if student.chr[0] == initial
+      while student.chr[0] == initial do
       puts "#{index+1}: #{student}"
+      break
       end
     end
   end
