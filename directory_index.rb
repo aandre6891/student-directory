@@ -5,14 +5,14 @@ def input_students
   # empty array
   students = []
   # gets the first name
-  name = gets.chomp
+  name = gets.chomp.capitalize
   students << name
   # repeat the code until the name is not empty
   while !name.empty? do
     # add the student hash to the array
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = gets.chomp.capitalize
     unless name == ""
       students << name
     end
@@ -27,9 +27,11 @@ def print_header
   end
   
   def print(students)
+    puts "Which initial do you want to check?"
+    initial = gets.chomp.upcase
     students.each_with_index do |student, index|
-      unless student == ""
-        puts "#{index+1}: #{student}"
+      if student.chr[0] == initial
+      puts "#{index+1}: #{student}"
       end
     end
   end
