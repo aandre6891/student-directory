@@ -1,7 +1,7 @@
 @students = [] # array accessible in all methods
 require 'csv'
 
-def ask_load
+def ask_load # ask the user to load a file
   puts "Do you want to load an existing list of students?"
   puts "1. Yes"
   puts "2. No"
@@ -21,14 +21,14 @@ def process_load(selection)
   end
 end
 
-def select_load_file
+def select_load_file # the user can choose the name of a file to be loaded
   puts "Please write the name of the file you want to load or press return to go to the menu"
   @filename = gets.chomp
-  unless @filename.empty?
-    if !@filename.include?(".csv")
-      @filename = @filename + ".csv"
+  unless @filename.empty? # if empty goes to the menu
+    if !@filename.include?(".csv") # if it doesn't have a .csv extension
+      @filename = @filename + ".csv" # add the extension
     end
-    try_load_students(@filename)
+    try_load_students(@filename) # send the filename to the method
     interactive_menu
   else
     interactive_menu
@@ -49,9 +49,9 @@ end
 def try_load_students(filename)
     if File.exist?(filename) # if it exists
       load_students(filename)
-      puts "Loaded #{@students.count} from #{filename}"
+      puts "Loaded #{@students.count} from #{filename}".center(100, "-")
     else # if it doesn't exist
-      puts "#{filename} don't exist, write another name or press return to go to the menu"
+      puts "#{filename} not found, choose another file or press return to go to the menu".center(100, "-")
       select_load_file
     end
 end
@@ -66,8 +66,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Export the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -109,9 +109,9 @@ def input_students
     # add the student hash to the array
     @students << {name: name, age: age, country: country, cohort: @cohort.to_sym}
     if @students.count == 1
-      puts "Now we have #{@students.count} student, add another one or return to end"
+      puts "Now we have #{@students.count} student, add another one or return to end".center(100, "-")
     else
-      puts "Now we have #{@students.count} students, add another one or return to end"
+      puts "Now we have #{@students.count} students, add another one or return to end".center(100, "-")
     end
     # get another name, age and country
     name = titleize(gets.chomp)
@@ -135,6 +135,7 @@ def save_students(filename)
     @students.each do |student|
       csv << [student[:name], student[:age], student[:country], student[:cohort]]
     end
+  puts "List saved in #{filename}".center(100, "-")
   end
 end
 
@@ -169,21 +170,21 @@ def check_cohort
 end
 
 def print_header
-  puts "The students of Villains Academy".center(50, "-")
-  puts "-------------------------------".center(50)
+  puts "The students of Villains Academy".center(100, "-")
+  puts "-------------------------------".center(100)
 end
 
 def print_student_list
   @students.each_with_index do |student, index|
-    puts "#{index+1}. #{student[:name]} - Age: #{student[:age]} - Country: #{student[:country]} (#{student[:cohort].capitalize} cohort)".center(50)
+    puts "#{index+1}. #{student[:name]} - Age: #{student[:age]} - Country: #{student[:country]} (#{student[:cohort].capitalize} cohort)".center(100)
   end
 end
 
 def print_footer
   if @students.count == 1
-    puts "Overall, we have #{@students.count} great student".center(50, "-")
+    puts "Overall, we have #{@students.count} great student".center(100, "-")
   else
-    puts "Overall, we have #{@students.count} great students".center(50, "-")
+    puts "Overall, we have #{@students.count} great students".center(100, "-")
   end
 end
 
