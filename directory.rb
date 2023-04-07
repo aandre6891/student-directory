@@ -1,3 +1,22 @@
+# type court and check typos
+def check_cohort
+  months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+  # get the cohort
+  puts "Please, enter the cohort of this student"
+  @cohort = gets.chomp.downcase
+  if @cohort.empty? 
+    @cohort = "2023"
+  elsif !@cohort.empty? && !months.include?(@cohort)
+    loop do
+      puts "wrong month, write it better"
+      @cohort = gets.chomp.downcase
+      if months.include?(@cohort)
+        break
+      end
+    end
+  end
+end
+
 # Capitalize every word of a string
 def titleize(string)
   string.split(" ").map {|word| word.capitalize}.join(" ")
@@ -10,23 +29,17 @@ def input_students
   students = []
   # get the first name, age and country
   name = titleize(gets.chomp)
-  puts "Please enter the age of this student"
-  age = gets.chomp.to_i
-  puts "Please enter the country of this student"
-  country = titleize(gets.chomp)
-  # while the name is not empty, repeat this code
   while !name.empty? do
+    puts "Please enter the age of this student"
+    age = gets.chomp.to_i
+    puts "Please enter the country of this student"
+    country = titleize(gets.chomp)
+  # while the name is not empty, repeat this code
     # add the student hash to the array
     students << {name: name, age: age, country: country, cohort: :november}
     puts "Now we have #{students.count} students, add another one or return to end"
     # get another name, age and country
     name = titleize(gets.chomp)
-    if !name.empty?
-      puts "Please enter the age of this student"
-      age = gets.chomp.to_i
-      puts "Please enter the country of this student"
-      country = titleize(gets.chomp)
-    end
   end
   # return the array of students
   students
