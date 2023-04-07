@@ -24,6 +24,9 @@ end
 def select_file
   puts "Please write the name of the file you want to load"
   @filename = gets.chomp
+  if !@filename.include?(".csv")
+    @filename = @filename + ".csv"
+  end
   try_load_students(@filename)
   interactive_menu
 end
@@ -34,7 +37,7 @@ def try_load_students(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
-    save_students
+    save_students(filename)
     puts "#{filename} didn't exist, we have created it"
   end
 end
@@ -113,8 +116,11 @@ def show_students
   end
 end
 
-def save_students
-  CSV.open("/Users/andyruggieri/Projects/student-directory/students.csv", "wb") do |csv|
+def save_students(filename)
+  if !filename.include?(".csv")
+    filename = filename + ".csv"
+  end
+  CSV.open("/Users/andyruggieri/Projects/student-directory/#{filename}", "wb") do |csv|
     @students.each do |student|
       csv << [student[:name], student[:age], student[:country], student[:cohort]]
     end
