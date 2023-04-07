@@ -1,5 +1,6 @@
 @students = [] # array accessible in all methods
 filename = "students.csv"
+require 'csv'
 
 # try to load students.csv when running or save an empty file if it doesn't exist
 def try_load_students(filename)
@@ -98,12 +99,13 @@ def save_students
 end
 
 def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, age, country, cohort = line.chomp.split(',')
-    @students << {name: name, age: age.to_i, country: country, cohort: cohort.to_sym}
+  CSV.foreach("/Users/andyruggieri/Projects/student-directory/students.csv") do |row|
+    name = row[0]
+    age = row[1]
+    country = row[2]
+    cohort = row[3]
+    @students << {name: name, age: age, country: country, cohort: cohort}
   end
-  file.close
 end
 
 # type court and check typos
