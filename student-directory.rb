@@ -77,20 +77,54 @@ end
 
 def input_students
   puts "Please enter the name of the student"
-  puts "To finish, just hit return twice"
+  puts "To finish, just hit return"
   # get the first name, age and country
   loop do
-    name = titleize(gets.chomp)
-    break if name.empty?
+    check_name
     puts "Please enter the age of this student"
-    age = gets.chomp.to_i
+    check_age
     puts "Please enter the country of this student"
-    country = titleize(gets.chomp)
+    check_country
     check_cohort
-    @students << {name: name, age: age, country: country, cohort: @cohort.to_sym}
+    @students << {name: @name, age: @age, country: @country, cohort: @cohort.to_sym}
     puts "Now we have #{@students.count} student#{'s' if @students.count != 1}, add another one or return to end".center(100, "-")
   end
   @students
+end
+
+def check_name
+  loop do
+    @name = titleize(gets.chomp)
+    if @name.match(/^[[:alpha:][:blank:]]+$/)
+      break
+    elsif @name.empty?
+      interactive_menu
+    else
+      puts "Please, enter a valid name".center(100, "-")
+    end
+  end
+end
+
+def check_age
+  loop do
+    @age = gets.chomp
+    if @age.match(/\D/)
+      puts "Please, enter a valid number".center(100, "-")
+    else
+      break
+    end
+  end
+end
+
+def check_country
+  loop do
+    @country = titleize(gets.chomp)
+    if @country.match(/^[[:alpha:][:blank:]]+$/)
+      break
+    else
+      puts "Please, enter a valid country".center(100, "-")
+    end
+  end
 end
 
 def show_students
@@ -127,7 +161,7 @@ def check_cohort # type court and check typos
     puts "Please, enter the cohort of this student (eg. january, february, march, etc)"
     @cohort = gets.chomp.downcase
     break if @cohort.empty? || months.include?(@cohort)
-    puts "Wrong month, write it better (eg. january, february, march, etc)".center(100, "-")
+    puts "Invalid month, try again (eg. january, february, march, etc)".center(100, "-")
   end
   @cohort = "2023" if @cohort.empty?
 end
