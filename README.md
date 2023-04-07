@@ -27,6 +27,7 @@ In the Menu you can choose between the following options:
 - Show the list of students
 - Export the current list to a new or existing file
 - Load a list from a file
+- Add more students from a file
 - Exit
 
 ## input the students
@@ -44,6 +45,10 @@ The program asks you the name you want to save the file. If the file already exi
 ## load a list from a file
 
 You can upload a .csv file from the same folder of the program. If the file doesn't exists, the program keeps on asking you for a correct name. no need to write the extension of the file.
+
+## add more students from a file
+
+As per the "load" option, you can upload a .csv file from the same folder of the program. The program ads the students from a file to the current list of students without overwriting the current list.
 
 ## exit
 
