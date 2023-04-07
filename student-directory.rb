@@ -14,16 +14,13 @@ def process_load(selection)
   end
 end
 
-def select_load_file # the user can choose the name of a file to be loaded
+def select_load_file
   puts "Please write the name of the file you want to load or press return to go to the menu"
   @filename = gets.chomp
-  unless @filename.empty? # if empty goes to the menu
-    @filename += ".csv" unless @filename.end_with?(".csv")
-    try_load_students(@filename) # send the filename to the method
-    interactive_menu
-  else
-    interactive_menu
-  end
+  return interactive_menu if @filename.empty?
+  @filename += ".csv" unless @filename.end_with?(".csv")
+  try_load_students(@filename)
+  interactive_menu
 end
 
 def select_save_file
