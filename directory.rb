@@ -95,6 +95,7 @@ def save_students
 end
 
 def load_students
+  @students = []
   CSV.foreach("/Users/andyruggieri/Projects/student-directory/students.csv") do |row|
     name = row[0]
     age = row[1]
