@@ -94,12 +94,12 @@ def input_students
 end
 
 def show_students
-  if @students.count != 0
+  if @students.empty?
+    puts "There are no students in this school"
+  else
     print_header
     print_student_list
     print_footer
-  else 
-    puts "There are no students in this school"
   end
 end
 
