@@ -1,7 +1,27 @@
 @students = [] # array accessible in all methods
-filename = "students.csv"
+@filename = "students.csv"
 require 'csv'
 
+def ask_load
+  puts "Do you want to load an existing list of students?"
+  puts "1. Yes"
+  puts "2. No"
+  puts "9. Exit"
+  process_load(gets.chomp)
+end
+
+def process_load(selection)
+  case selection
+    when "1"
+      try_load_students(@filename)
+      interactive_menu
+    when "2"
+      interactive_menu
+    when "9"
+      puts "Bye bye!"
+      exit # this will cause the program to terminate
+  end
+end
 # try to load students.csv when running or save an empty file if it doesn't exist
 def try_load_students(filename)
   if File.exist?(filename) # if it exists
@@ -39,6 +59,7 @@ def process(selection)
   when "4"
     load_students
   when "9"
+    puts "Bye bye!"
     exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
@@ -143,5 +164,4 @@ def print_footer
   end
 end
 
-try_load_students(filename)
-interactive_menu
+ask_load
