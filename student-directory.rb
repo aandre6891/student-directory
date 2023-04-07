@@ -5,7 +5,7 @@ def ask_load
   loop do
     puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
     case gets.chomp
-      when "1" then select_load_file
+      when "1" then select_load_file(1)
       when "2" then interactive_menu
       when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
       else
@@ -14,12 +14,12 @@ def ask_load
   end
 end
 
-def select_load_file
+def select_load_file(selection)
   puts "Please write the name of the file you want to load or press return to go to the menu"
   @filename = gets.chomp
   return interactive_menu if @filename.empty?
   @filename += ".csv" unless @filename.end_with?(".csv")
-  check_file_exist(@filename)
+  check_file_exist(@filename, selection)
   interactive_menu
 end
 
@@ -31,13 +31,13 @@ def select_save_file
   interactive_menu
 end
 
-def check_file_exist(filename) # try to load students.csv when running or save an empty file if it doesn't exist
+def check_file_exist(filename, selection) # try to load students.csv when running or save an empty file if it doesn't exist
   if File.exist?(filename) # if it exists
-    load_students(filename)
+    load_students(filename, selection)
     puts "Loaded #{@students.count} from #{filename}".center(100, "-")
   else # if it doesn't exist
     puts "#{filename} not found, choose another file or press return to go to the menu".center(100, "-")
-    select_load_file
+    select_load_file(selection)
   end
 end
 
@@ -50,7 +50,7 @@ def interactive_menu
 end
 
 def print_menu
-  puts "1. Input the students\n2. Show the students\n3. Export the list to a file\n4. Load a list from a file\n9. Exit"
+  puts "1. Input the students\n2. Show the students\n3. Export the list to a file\n4. Load a list from a file\n5. Add a list from a file\n9. Exit"
 end
 
 def process(selection)
@@ -62,7 +62,9 @@ def process(selection)
   when "3"
     select_save_file
   when "4"
-    select_load_file
+    select_load_file(4)
+  when "5"
+    select_load_file(5)
   when "9"
     puts "Bye bye!".center(100, "-")
     exit # this will cause the program to terminate
@@ -144,8 +146,8 @@ def save_students(filename)
   end
 end
 
-def load_students(filename)
-  @students = []
+def load_students(filename, selection)
+  @students = [] if selection != 5
   CSV.foreach("/Users/andyruggieri/Projects/student-directory/#{filename}") do |row|
     name = row[0]
     age = row[1]
