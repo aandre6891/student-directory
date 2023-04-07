@@ -2,13 +2,13 @@
 def check_cohort
   months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   # get the cohort
-  puts "Please, enter the cohort of this student"
+  puts "Please, enter the cohort of this student (eg. January)"
   @cohort = gets.chomp.downcase
   if @cohort.empty? 
     @cohort = "2023"
   elsif !@cohort.empty? && !months.include?(@cohort)
     loop do
-      puts "wrong month, write it better"
+      puts "Wrong month, write it better"
       @cohort = gets.chomp.downcase
       if months.include?(@cohort)
         break
@@ -34,9 +34,10 @@ def input_students
     age = gets.chomp.to_i
     puts "Please enter the country of this student"
     country = titleize(gets.chomp)
+    check_cohort
   # while the name is not empty, repeat this code
     # add the student hash to the array
-    students << {name: name, age: age, country: country, cohort: :november}
+    students << {name: name, age: age, country: country, cohort: @cohort.to_sym}
     puts "Now we have #{students.count} students, add another one or return to end"
     # get another name, age and country
     name = titleize(gets.chomp)
@@ -52,7 +53,7 @@ end
 
 def print(students)
   students.each_with_index do |student, index|
-    puts "#{index+1}. #{student[:name]} - Age: #{student[:age]} - Country: #{student[:country]} (#{student[:cohort]} cohort)".center(50)
+    puts "#{index+1}. #{student[:name]} - Age: #{student[:age]} - Country: #{student[:country]} (#{student[:cohort].capitalize} cohort)".center(50)
   end
 end
 
