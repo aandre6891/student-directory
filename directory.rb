@@ -1,14 +1,14 @@
 @students = [] # array accessible in all methods
+filename = "students.csv"
 
-def try_load_students
-  filename = "students.csv" # first argument from the command line
-  return if filename.nil? # get out of the method if it isn't given
+# try to load students.csv when running or save an empty file if it doesn't exist
+def try_load_students(filename)
   if File.exist?(filename) # if it exists
-    load_students(filename)
+    load_students
     puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     save_students
-    puts "#{filename} didn't exist, we have created a blank one."
+    puts "#{filename} didn't exist, we have created it"
   end
 end
 
@@ -97,11 +97,11 @@ def save_students
   file.close
 end
 
-def load_students(filename)
+def load_students
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
     name, age, country, cohort = line.chomp.split(',')
-    @students << {name: name, age: age, country: country, cohort: cohort.to_sym}
+    @students << {name: name, age: age.to_i, country: country, cohort: cohort.to_sym}
   end
   file.close
 end
@@ -144,5 +144,5 @@ def print_footer
   end
 end
 
-try_load_students
+try_load_students(filename)
 interactive_menu
