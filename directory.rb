@@ -16,7 +16,7 @@ def process_load(selection)
     when "2"
       interactive_menu
     when "9"
-      puts "Bye bye!"
+      puts "Bye bye!".center(100, "-")
       exit # this will cause the program to terminate
   end
 end
@@ -58,6 +58,7 @@ end
 
 def interactive_menu
   loop do
+    puts "* * * * Menu * * * *"
     print_menu
     process(gets.chomp)
   end
@@ -82,7 +83,7 @@ def process(selection)
   when "4"
     select_load_file
   when "9"
-    puts "Bye bye!"
+    puts "Bye bye!".center(100, "-")
     exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
@@ -182,8 +183,10 @@ end
 
 def print_footer
   if @students.count == 1
+    puts "-------------------------------".center(100)
     puts "Overall, we have #{@students.count} great student".center(100, "-")
   else
+    puts "-------------------------------".center(100)
     puts "Overall, we have #{@students.count} great students".center(100, "-")
   end
 end
