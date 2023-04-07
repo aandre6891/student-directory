@@ -26,9 +26,7 @@ end
 def select_save_file
   puts "What name would you like to save the list to?"
   @filename = gets.chomp
-  if !@filename.include?(".csv")
-    @filename = @filename + ".csv"
-  end
+  @filename += ".csv" if !@filename.end_with?(".csv")
   save_students(@filename)
   interactive_menu
 end
