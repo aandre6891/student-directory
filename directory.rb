@@ -1,5 +1,4 @@
 @students = [] # array accessible in all methods
-@filename = "students.csv"
 require 'csv'
 
 def ask_load
@@ -13,8 +12,7 @@ end
 def process_load(selection)
   case selection
     when "1"
-      try_load_students(@filename)
-      interactive_menu
+      select_file
     when "2"
       interactive_menu
     when "9"
@@ -22,10 +20,18 @@ def process_load(selection)
       exit # this will cause the program to terminate
   end
 end
+
+def select_file
+  puts "Please write the name of the file you want to load"
+  @filename = gets.chomp
+  try_load_students(@filename)
+  interactive_menu
+end
+
 # try to load students.csv when running or save an empty file if it doesn't exist
 def try_load_students(filename)
   if File.exist?(filename) # if it exists
-    load_students
+    load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     save_students
@@ -57,7 +63,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    select_file
   when "9"
     puts "Bye bye!"
     exit # this will cause the program to terminate
@@ -115,9 +121,9 @@ def save_students
   end
 end
 
-def load_students
+def load_students(filename)
   @students = []
-  CSV.foreach("/Users/andyruggieri/Projects/student-directory/students.csv") do |row|
+  CSV.foreach("/Users/andyruggieri/Projects/student-directory/#{filename}") do |row|
     name = row[0]
     age = row[1]
     country = row[2]
