@@ -3,7 +3,8 @@ require 'csv'
 
 def ask_load # ask the user to load a file
   loop do
-    puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
+    puts "Welcome to the Fantasy Academy Directory".center(100, "-")
+    puts "\nDo you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
     case gets.chomp
       when "1" then select_load_file(0) # in this case 0 is useless, but we need to pass it
       when "2" then interactive_menu
