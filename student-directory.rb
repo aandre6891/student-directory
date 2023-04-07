@@ -8,13 +8,9 @@ end
 
 def process_load(selection)
   case selection
-    when "1"
-      select_load_file
-    when "2"
-      interactive_menu
-    when "9"
-      puts "Bye bye!".center(100, "-")
-      exit # this will cause the program to terminate
+  when "1" then select_load_file
+  when "2" then interactive_menu
+  when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
   end
 end
 
