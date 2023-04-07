@@ -1,11 +1,11 @@
 @students = [] # array accessible in all methods
 require 'csv'
 
-def ask_load
+def ask_load # ask the user to load a file
   loop do
     puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
     case gets.chomp
-      when "1" then select_load_file(1)
+      when "1" then select_load_file(0) # in this case 0 is useless, but we need to pass it
       when "2" then interactive_menu
       when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
       else
@@ -14,11 +14,11 @@ def ask_load
   end
 end
 
-def select_load_file(selection)
+def select_load_file(selection) # selection is 0, 4 or 5
   puts "Please write the name of the file you want to load or press return to go to the menu"
   @filename = gets.chomp
   return interactive_menu if @filename.empty?
-  @filename += ".csv" unless @filename.end_with?(".csv")
+  @filename += ".csv" unless @filename.end_with?(".csv") # add .csv if not given by user
   check_file_exist(@filename, selection)
   interactive_menu
 end
@@ -37,7 +37,7 @@ def check_file_exist(filename, selection) # try to load students.csv when runnin
     puts "Loaded #{@students.count} from #{filename}".center(100, "-")
   else # if it doesn't exist
     puts "#{filename} not found, choose another file or press return to go to the menu".center(100, "-")
-    select_load_file(selection)
+    select_load_file(selection) # selection is 0, 4 or 5
   end
 end
 
@@ -50,7 +50,7 @@ def interactive_menu
 end
 
 def print_menu
-  puts "1. Input the students\n2. Show the students\n3. Export the list to a file\n4. Load a list from a file\n5. Add a list from a file\n9. Exit"
+  puts "1. Input the students\n2. Show the students\n3. Export the list to a file\n4. Load a list from a file\n5. Add more students from a file\n9. Exit"
 end
 
 def process(selection)
@@ -62,9 +62,9 @@ def process(selection)
   when "3"
     select_save_file
   when "4"
-    select_load_file(4)
+    select_load_file(4) # 4 is useless, 5 is important
   when "5"
-    select_load_file(5)
+    select_load_file(5) # we need to pass 5 to not overwrite the array @students
   when "9"
     puts "Bye bye!".center(100, "-")
     exit # this will cause the program to terminate
@@ -80,12 +80,9 @@ end
 def input_students
   puts "Please enter the name of the student"
   puts "To finish, just hit return"
-  # get the first name, age and country
-  loop do
+  loop do  # get the first name, age and country
     check_name
-    puts "Please enter the age of this student"
     check_age
-    puts "Please enter the country of this student"
     check_country
     check_cohort
     @students << {name: @name, age: @age, country: @country, cohort: @cohort.to_sym}
@@ -108,6 +105,7 @@ def check_name
 end
 
 def check_age
+  puts "Please enter the age of this student"
   loop do
     @age = gets.chomp
     if @age.match(/\D/)
@@ -119,6 +117,7 @@ def check_age
 end
 
 def check_country
+  puts "Please enter the country of this student"
   loop do
     @country = titleize(gets.chomp)
     if @country.match(/^[[:alpha:][:blank:]]+$/)
@@ -146,8 +145,8 @@ def save_students(filename)
   end
 end
 
-def load_students(filename, selection)
-  @students = [] if selection != 5
+def load_students(filename, selection) # selection is 0, 4 or 5
+  @students = [] if selection != 5 # if selection is 5 we don't overwrite the array @students
   CSV.foreach("/Users/andyruggieri/Projects/student-directory/#{filename}") do |row|
     name = row[0]
     age = row[1]
