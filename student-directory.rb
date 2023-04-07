@@ -167,7 +167,7 @@ def check_cohort # type court and check typos
 end
 
 def print_header
-  puts "The students of Villains Academy".center(100, "-")
+  puts "The students of Fantasy Academy".center(100, "-")
   puts "-------------------------------".center(100)
 end
 
