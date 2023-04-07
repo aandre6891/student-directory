@@ -108,7 +108,7 @@ def check_age
   puts "Please enter the age of this student"
   loop do
     @age = gets.chomp
-    if @age.match(/\D/)
+    if @age.match(/\D/) || @age.empty?
       puts "Please, enter a valid number".center(100, "-")
     else
       break
