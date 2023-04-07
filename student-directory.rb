@@ -2,12 +2,15 @@
 require 'csv'
 
 def ask_load
-  puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
-  selection = gets.chomp
-  case selection
-    when "1" then select_load_file
-    when "2" then interactive_menu
-    when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
+  loop do
+    puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
+    case gets.chomp
+      when "1" then select_load_file
+      when "2" then interactive_menu
+      when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
+      else
+      puts "I don't know what you meant, try again".center(100, "-")
+    end
   end
 end
 
@@ -16,7 +19,7 @@ def select_load_file
   @filename = gets.chomp
   return interactive_menu if @filename.empty?
   @filename += ".csv" unless @filename.end_with?(".csv")
-  try_load_students(@filename)
+  check_file_exist(@filename)
   interactive_menu
 end
 
@@ -28,7 +31,7 @@ def select_save_file
   interactive_menu
 end
 
-def try_load_students(filename) # try to load students.csv when running or save an empty file if it doesn't exist
+def check_file_exist(filename) # try to load students.csv when running or save an empty file if it doesn't exist
   if File.exist?(filename) # if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}".center(100, "-")
@@ -64,7 +67,7 @@ def process(selection)
     puts "Bye bye!".center(100, "-")
     exit # this will cause the program to terminate
   else
-    puts "I don't know what you meant, try again"
+    puts "I don't know what you meant, try again".center(100, "-")
   end
 end
 
