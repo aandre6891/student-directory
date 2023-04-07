@@ -8,9 +8,9 @@ end
 
 def process_load(selection)
   case selection
-  when "1" then select_load_file
-  when "2" then interactive_menu
-  when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
+    when "1" then select_load_file
+    when "2" then interactive_menu
+    when "9" then puts "Bye bye!".center(100, "-"); exit # this will cause the program to terminate
   end
 end
 
@@ -33,13 +33,13 @@ end
 
 # try to load students.csv when running or save an empty file if it doesn't exist
 def try_load_students(filename)
-    if File.exist?(filename) # if it exists
-      load_students(filename)
-      puts "Loaded #{@students.count} from #{filename}".center(100, "-")
-    else # if it doesn't exist
-      puts "#{filename} not found, choose another file or press return to go to the menu".center(100, "-")
-      select_load_file
-    end
+  if File.exist?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}".center(100, "-")
+  else # if it doesn't exist
+    puts "#{filename} not found, choose another file or press return to go to the menu".center(100, "-")
+    select_load_file
+  end
 end
 
 def interactive_menu
@@ -51,11 +51,7 @@ def interactive_menu
 end
 
 def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Export the list to a file"
-  puts "4. Load the list from a file"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "1. Input the students\n2. Show the students\n3. Export the list to a file\n4. Load a list from a file\n9. Exit"
 end
 
 def process(selection)
