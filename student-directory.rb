@@ -95,11 +95,9 @@ end
 
 def show_students
   if @students.empty?
-    puts "There are no students in this school"
+    puts "There are no students in this school".center(100, "-")
   else
-    print_header
-    print_student_list
-    print_footer
+    print_header; print_student_list; print_footer
   end
 end
 
@@ -123,23 +121,15 @@ def load_students(filename)
   end
 end
 
-# type court and check typos
-def check_cohort
+def check_cohort # type court and check typos
   months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-  # get the cohort
-  puts "Please, enter the cohort of this student (eg. January)"
-  @cohort = gets.chomp.downcase
-  if @cohort.empty? 
-    @cohort = "2023"
-  elsif !@cohort.empty? && !months.include?(@cohort)
-    loop do
-      puts "Wrong month, write it better"
-      @cohort = gets.chomp.downcase
-      if months.include?(@cohort)
-        break
-      end
-    end
+  loop do
+    puts "Please, enter the cohort of this student (eg. january, february, march, etc)"
+    @cohort = gets.chomp.downcase
+    break if @cohort.empty? || months.include?(@cohort)
+    puts "Wrong month, write it better (eg. january, february, march, etc)".center(100, "-")
   end
+  @cohort = "2023" if @cohort.empty?
 end
 
 def print_header
@@ -154,13 +144,8 @@ def print_student_list
 end
 
 def print_footer
-  if @students.count == 1
-    puts "-------------------------------".center(100)
-    puts "Overall, we have #{@students.count} great student".center(100, "-")
-  else
-    puts "-------------------------------".center(100)
-    puts "Overall, we have #{@students.count} great students".center(100, "-")
-  end
+  puts "-------------------------------".center(100)
+  puts "Overall, we have #{@students.count} great student#{'s' if @students.count != 1}".center(100, "-")
 end
 
 ask_load
