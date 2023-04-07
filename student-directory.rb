@@ -1,12 +1,9 @@
 @students = [] # array accessible in all methods
 require 'csv'
 
-def ask_load # ask the user to load a file
+def ask_load
   puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
-  process_load(gets.chomp)
-end
-
-def process_load(selection)
+  selection = gets.chomp
   case selection
     when "1" then select_load_file
     when "2" then interactive_menu
