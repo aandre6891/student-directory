@@ -70,6 +70,11 @@ def print_footer(students)
 end
 
 students = input_students
-print_header
-print(students)
-print_footer(students)
+# prints only if there are students
+if students.count != 0
+  print_header
+  print(students)
+  print_footer(students)
+else 
+  puts "There are no students in this school"
+end
