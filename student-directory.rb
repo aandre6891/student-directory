@@ -31,8 +31,7 @@ def select_save_file
   interactive_menu
 end
 
-# try to load students.csv when running or save an empty file if it doesn't exist
-def try_load_students(filename)
+def try_load_students(filename) # try to load students.csv when running or save an empty file if it doesn't exist
   if File.exist?(filename) # if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}".center(100, "-")
@@ -72,8 +71,7 @@ def process(selection)
   end
 end
 
-# Capitalize every word of a string
-def titleize(string)
+def titleize(string) # Capitalize every word of a string
   string.split(" ").map {|word| word.capitalize}.join(" ")
 end
 
@@ -81,25 +79,17 @@ def input_students
   puts "Please enter the name of the student"
   puts "To finish, just hit return twice"
   # get the first name, age and country
-  name = titleize(gets.chomp)
-  while !name.empty? do
-    # while the name is not empty, repeat this code
+  loop do
+    name = titleize(gets.chomp)
+    break if name.empty?
     puts "Please enter the age of this student"
     age = gets.chomp.to_i
     puts "Please enter the country of this student"
     country = titleize(gets.chomp)
     check_cohort
-    # add the student hash to the array
     @students << {name: name, age: age, country: country, cohort: @cohort.to_sym}
-    if @students.count == 1
-      puts "Now we have #{@students.count} student, add another one or return to end".center(100, "-")
-    else
-      puts "Now we have #{@students.count} students, add another one or return to end".center(100, "-")
-    end
-    # get another name, age and country
-    name = titleize(gets.chomp)
+    puts "Now we have #{@students.count} student#{'s' if @students.count != 1}, add another one or return to end".center(100, "-")
   end
-  # return the array of students
   @students
 end
 
