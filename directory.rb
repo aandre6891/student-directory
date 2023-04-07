@@ -30,15 +30,19 @@ def input_students
   # get the first name, age and country
   name = titleize(gets.chomp)
   while !name.empty? do
+    # while the name is not empty, repeat this code
     puts "Please enter the age of this student"
     age = gets.chomp.to_i
     puts "Please enter the country of this student"
     country = titleize(gets.chomp)
     check_cohort
-  # while the name is not empty, repeat this code
     # add the student hash to the array
     students << {name: name, age: age, country: country, cohort: @cohort.to_sym}
-    puts "Now we have #{students.count} students, add another one or return to end"
+    if students.count == 1
+      puts "Now we have #{students.count} student, add another one or return to end"
+    else
+      puts "Now we have #{students.count} students, add another one or return to end"
+    end
     # get another name, age and country
     name = titleize(gets.chomp)
   end
@@ -58,7 +62,11 @@ def print(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(50, "-")
+  if students.count == 1
+    puts "Overall, we have #{students.count} great student".center(50, "-")
+  else
+    puts "Overall, we have #{students.count} great students".center(50, "-")
+  end
 end
 
 students = input_students
