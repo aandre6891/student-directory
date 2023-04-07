@@ -1,7 +1,7 @@
 @students = [] # array accessible in all methods
 require 'csv'
 
-def ask_load
+def ask_load # ask the user to load a file
   puts "Do you want to load an existing list of students?\n1. Yes\n2. No\n9. Exit"
   process_load(gets.chomp)
 end
