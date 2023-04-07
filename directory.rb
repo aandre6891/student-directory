@@ -12,7 +12,7 @@ end
 def process_load(selection)
   case selection
     when "1"
-      select_file
+      select_load_file
     when "2"
       interactive_menu
     when "9"
@@ -21,25 +21,39 @@ def process_load(selection)
   end
 end
 
-def select_file
-  puts "Please write the name of the file you want to load"
+def select_load_file
+  puts "Please write the name of the file you want to load or press return to go to the menu"
+  @filename = gets.chomp
+  unless @filename.empty?
+    if !@filename.include?(".csv")
+      @filename = @filename + ".csv"
+    end
+    try_load_students(@filename)
+    interactive_menu
+  else
+    interactive_menu
+  end
+end
+
+def select_save_file
+  puts "What name would you like to save the list to?"
   @filename = gets.chomp
   if !@filename.include?(".csv")
     @filename = @filename + ".csv"
   end
-  try_load_students(@filename)
+  save_students(@filename)
   interactive_menu
 end
 
 # try to load students.csv when running or save an empty file if it doesn't exist
 def try_load_students(filename)
-  if File.exist?(filename) # if it exists
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
-    save_students(filename)
-    puts "#{filename} didn't exist, we have created it"
-  end
+    if File.exist?(filename) # if it exists
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+    else # if it doesn't exist
+      puts "#{filename} don't exist, write another name or press return to go to the menu"
+      select_load_file
+    end
 end
 
 def interactive_menu
@@ -64,9 +78,9 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_students
+    select_save_file
   when "4"
-    select_file
+    select_load_file
   when "9"
     puts "Bye bye!"
     exit # this will cause the program to terminate
@@ -117,9 +131,6 @@ def show_students
 end
 
 def save_students(filename)
-  if !filename.include?(".csv")
-    filename = filename + ".csv"
-  end
   CSV.open("/Users/andyruggieri/Projects/student-directory/#{filename}", "wb") do |csv|
     @students.each do |student|
       csv << [student[:name], student[:age], student[:country], student[:cohort]]
